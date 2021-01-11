@@ -60,7 +60,10 @@ body {
   text-transform: uppercase;
 }
 
-.controls_Btn button,
-.controls_colors .controls_color:active {
+.controls_color:active {
+  transform: scale(0.95);
+}
+
+.controls_Btn button:active {
   transform: scale(0.95);
 }
