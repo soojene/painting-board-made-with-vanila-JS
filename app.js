@@ -1,11 +1,18 @@
 const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext('2d');
 const colors = document.getElementsByClassName("jsColor");
+const range = document.getElementById("jsRange");
+const mode = document.getElementById("jsMode");
 
-ctx.strokeStyle = "#000000";
+const initialColor = "#000000";
+
+ctx.strokeStyle = "initialColor";
+ctx.fillStyle = "initialColor";
 ctx.lineWidth = 2.5;
 
+// 한번 클릭이 될때 바뀌고 다시 클릭될때 원래대로 변경되야 할때 변수를 정해준다.
 let painting = false;
+let filling = false; 
 
 //캔버스 태그에 사이즈를 입력하면 따로 사이즈를 주지 않아도 작동되는듯함.
 //클래스이름으로 캔버스 사이즈 값을 설정할때. 이렇게 하거나 아래 함수로 해도 화면 사이즈가 바뀔때 새로고침을 해야 함..
@@ -26,6 +33,10 @@ function stopPainting (){
 
 function startPainting (event){
     painting = true;
+    if (filling){
+        ctx.fillStyle
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 }
 
 //onMouseMove함수에서 x값과 y값이 계속 바뀌기 때문에 이 함수안에서 코드 작성을 한다.
@@ -43,9 +54,26 @@ function onMouseMove(event){
     }
 }
 
-function ChangeColorHandler(event){
+function changeColorHandler(event){
     const lineColor = event.target.style.backgroundColor;
     ctx.strokeStyle = lineColor;
+    ctx.fillStyle = lineColor;
+}
+
+function changeRangeHandler(event){
+    const lineWidth = event.target.value;
+    ctx.lineWidth = lineWidth;
+}
+
+function paintModeChange(){ //이 함수에선 event가 필요없음 왜??
+    if (filling == false){
+        filling = true;
+        mode.innerText = "fill";
+    }
+    else {
+        filling = false;
+        mode.innerText = "paint"; 
+    }
 }
 
 if (canvas){
@@ -56,6 +84,13 @@ if (canvas){
 }
 
 Array.from(colors).forEach(color=>
-    color.addEventListener("click",ChangeColorHandler)
+    color.addEventListener("click",changeColorHandler)
     );
 
+if(range){
+    range.addEventListener("input", changeRangeHandler);
+}
+
+if(mode){
+    mode.addEventListener("click", paintModeChange);
+}
