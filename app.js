@@ -6,14 +6,6 @@ const mode = document.getElementById("jsMode");
 
 const initialColor = "#000000";
 
-ctx.strokeStyle = "initialColor";
-ctx.fillStyle = "initialColor";
-ctx.lineWidth = 2.5;
-
-// 한번 클릭이 될때 바뀌고 다시 클릭될때 원래대로 변경되야 할때 변수를 정해준다.
-let painting = false;
-let filling = false; 
-
 //캔버스 태그에 사이즈를 입력하면 따로 사이즈를 주지 않아도 작동되는듯함.
 //클래스이름으로 캔버스 사이즈 값을 설정할때. 이렇게 하거나 아래 함수로 해도 화면 사이즈가 바뀔때 새로고침을 해야 함..
 canvas.width = document.getElementsByClassName("canvas")[0].offsetWidth;
@@ -26,6 +18,16 @@ canvas.height = document.getElementsByClassName("canvas")[0].offsetHeight;
 //     canvas.height = canvas.offsetHeight;
 // }
 // canvasContainner(canvas);
+
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.strokeStyle = "initialColor";
+// ctx.fillStyle = "initialColor";
+ctx.lineWidth = 2.5;
+
+// 한번 클릭이 될때 바뀌고 다시 클릭될때 원래대로 변경되야 할때 변수를 정해준다.
+let painting = false;
+let filling = false; 
 
 function stopPainting (){
     painting = false; 
