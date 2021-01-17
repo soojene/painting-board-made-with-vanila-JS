@@ -3,6 +3,7 @@ const ctx = canvas.getContext('2d');
 const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
+const saveImg = document.getElementById("jsSave");
 
 const initialColor = "#000000";
 
@@ -56,6 +57,11 @@ function onMouseMove(event){
     }
 }
 
+function rightClickHandle (event){
+    event.preventDefault();
+    console.log(event);
+}
+
 function changeColorHandler(event){
     const lineColor = event.target.style.backgroundColor;
     ctx.strokeStyle = lineColor;
@@ -70,12 +76,20 @@ function changeRangeHandler(event){
 function paintModeChange(){ //이 함수에선 event가 필요없음 왜??
     if (filling == false){
         filling = true;
-        mode.innerText = "fill";
+        mode.innerText = "paint";
     }
     else {
         filling = false;
-        mode.innerText = "paint"; 
+        mode.innerText = "fill"; 
     }
+}
+
+function handleSaveImg (){
+    const image = canvas.toDataURL("image/png");
+    const imgLink = document.createElement("a");
+    imgLink.href = image;
+    imgLink.download = "PAINT[🌈]" // 링크로 가는게 아니라 다운로드(저장)하기때문에 저장됨.
+    imgLink.click();
 }
 
 if (canvas){
@@ -83,6 +97,7 @@ if (canvas){
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
+    canvas.addEventListener("contextmenu", rightClickHandle);
 }
 
 Array.from(colors).forEach(color=>
@@ -95,4 +110,8 @@ if(range){
 
 if(mode){
     mode.addEventListener("click", paintModeChange);
+}
+
+if (saveImg){
+    saveImg.addEventListener("click", handleSaveImg);
 }
