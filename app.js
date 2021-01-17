@@ -89,7 +89,7 @@ function handleSaveImg (){
     const imgLink = document.createElement("a");
     imgLink.href = image;
     imgLink.download = "PAINT[🌈]" // 링크로 가는게 아니라 다운로드(저장)하기때문에 저장됨.
-    imgLink.click();
+    imgLink.click(); // 링크를 클릭한거처럼 해서 다운로드 가능하게
 }
 
 if (canvas){
